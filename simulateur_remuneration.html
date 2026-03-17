@@ -261,6 +261,7 @@
   .alert-warning { background: var(--warning-bg); color: #92400e; }
 
   .detail-card .card-header { background: var(--primary-lighter); }
+  .table-orange thead th { background: #b45309; }
 
   .tier-detail {
     display: flex;
@@ -569,6 +570,9 @@
   body.horizontal #rentabilite-table td { font-size: 0.55rem; padding: 0.08rem 0.1rem; }
   body.horizontal #rentabilite-card .card-header { font-size: 0.52rem; }
 
+  /* --- Salaires nets card --- */
+  body.horizontal #salaires-nets-card { grid-column: auto; grid-row: auto; }
+
   /* --- Cacher bouton PDF en horizontal --- */
   body.horizontal .btn-pdf-wrapper { display: none; }
 
@@ -637,20 +641,6 @@
           <span class="suffix">%</span>
         </div>
       </div>
-      <div class="form-row" style="border-top:2px solid var(--border);margin-top:0.4rem;padding-top:0.8rem">
-        <label>Taux charges patronales</label>
-        <div class="input-group">
-          <input type="number" id="taux_charges_patron" value="35" step="1" min="0" max="100">
-          <span class="suffix">%</span>
-        </div>
-      </div>
-      <div class="form-row">
-        <label>Taux charges salariales (estimation net)</label>
-        <div class="input-group">
-          <input type="number" id="taux_charges_salarie" value="25" step="1" min="0" max="100">
-          <span class="suffix">%</span>
-        </div>
-      </div>
       <div id="manager-obj-progress" class="obj-progress"></div>
     </div>
   </div>
@@ -660,31 +650,31 @@
     <div class="card-header"><span class="icon">&#128176;</span> Commissions personnelles</div>
     <div class="card-body">
       <div class="form-row">
-        <label>Taux mandats simples</label>
+        <label>CA r&eacute;alis&eacute; total</label>
+        <div class="input-group">
+          <input type="number" id="ca_perso_total" value="100000" step="5000">
+          <span class="suffix">€</span>
+        </div>
+      </div>
+      <div class="form-row">
+        <label>% en exclusif</label>
+        <div class="input-group">
+          <input type="number" id="pct_exclusif" value="70" step="5" min="0" max="100">
+          <span class="suffix">%</span>
+        </div>
+      </div>
+      <div class="form-row">
+        <label>Taux commission simples</label>
         <div class="input-group">
           <input type="number" id="taux_simple" value="10" step="0.5" min="0" max="100">
           <span class="suffix">%</span>
         </div>
       </div>
       <div class="form-row">
-        <label>CA mandats simples</label>
-        <div class="input-group">
-          <input type="number" id="ca_simple" value="30000" step="1000">
-          <span class="suffix">€</span>
-        </div>
-      </div>
-      <div class="form-row">
-        <label>Taux mandats exclusifs</label>
+        <label>Taux commission exclusifs</label>
         <div class="input-group">
           <input type="number" id="taux_exclusif" value="15" step="0.5" min="0" max="100">
           <span class="suffix">%</span>
-        </div>
-      </div>
-      <div class="form-row">
-        <label>CA mandats exclusifs</label>
-        <div class="input-group">
-          <input type="number" id="ca_exclusif" value="70000" step="1000">
-          <span class="suffix">€</span>
         </div>
       </div>
     </div>
@@ -721,10 +711,10 @@
           <span class="suffix">€</span>
         </div>
       </div>
-      <div style="border-top:2px solid var(--border);margin-top:0.4rem;padding-top:0.6rem;margin-bottom:0.2rem">
-        <span style="font-size:0.8rem;font-weight:600;color:var(--primary);text-transform:uppercase;letter-spacing:0.3px">Commissions n&eacute;go sur CA (progressif)</span>
+      <div style="border-top:2px solid #b45309;margin-top:0.4rem;padding-top:0.6rem;margin-bottom:0.2rem">
+        <span style="font-size:0.8rem;font-weight:600;color:#b45309;text-transform:uppercase;letter-spacing:0.3px">Commissions n&eacute;go sur CA (progressif)</span>
       </div>
-      <table style="margin-bottom:0.5rem">
+      <table style="margin-bottom:0.5rem" class="table-orange">
         <thead>
           <tr><th>Tranche</th><th>Seuil HT (€)</th><th>Taux (%)</th></tr>
         </thead>
@@ -776,12 +766,26 @@
           <span class="suffix">€</span>
         </div>
       </div>
+      <div class="form-row" style="border-top:2px solid var(--border);margin-top:0.4rem;padding-top:0.8rem">
+        <label>Taux charges patronales</label>
+        <div class="input-group">
+          <input type="number" id="taux_charges_patron" value="35" step="1" min="0" max="100">
+          <span class="suffix">%</span>
+        </div>
+      </div>
+      <div class="form-row">
+        <label>Taux charges salariales (estimation net)</label>
+        <div class="input-group">
+          <input type="number" id="taux_charges_salarie" value="25" step="1" min="0" max="100">
+          <span class="suffix">%</span>
+        </div>
+      </div>
     </div>
   </div>
 
   <!-- ═══ PRIMES ═══ -->
   <div class="card">
-    <div class="card-header"><span class="icon">&#127942;</span> Primes</div>
+    <div class="card-header" style="background:#b8860b"><span class="icon">&#127942;</span> Primes</div>
     <div class="card-body">
       <div class="form-row">
         <label>Prime objectif perso manager atteint (100%)</label>
@@ -874,6 +878,14 @@
       </table>
     </div>
   </div>
+  <!-- ═══ SALAIRES NETS MENSUELS ═══ -->
+  <div class="card" id="salaires-nets-card">
+    <div class="card-header" style="background:#6d28d9"><span class="icon">&#128181;</span> Salaires nets mensuels (estimation)</div>
+    <div class="card-body" id="salaires-nets-body">
+      <!-- filled by JS -->
+    </div>
+  </div>
+
   <!-- ═══ BILAN RENTABILITE GLOBALE ═══ -->
   <div class="card full-width bilan-card" id="bilan-card">
     <div class="card-header" style="background:#1e40af;font-size:0.95rem"><span class="icon">&#128200;</span> Bilan Rentabilit&eacute; Globale — Revenus vs Co&ucirc;ts</div>
@@ -958,14 +970,15 @@ function calculate() {
   const fixe = val('salaire_fixe');
   const objPersoManager = val('objectif_perso_manager');
   const tauxSimple = val('taux_simple') / 100;
-  const caSimple = val('ca_simple');
   const tauxExclusif = val('taux_exclusif') / 100;
-  const caExclusif = val('ca_exclusif');
+  const caPersoTotal = val('ca_perso_total');
+  const pctExclusif = val('pct_exclusif') / 100;
+  const caExclusif = caPersoTotal * pctExclusif;
+  const caSimple = caPersoTotal * (1 - pctExclusif);
 
   const commSimple = caSimple * tauxSimple;
   const commExclusif = caExclusif * tauxExclusif;
   const commPerso = commSimple + commExclusif;
-  const caPersoTotal = caSimple + caExclusif;
 
   // Manager objective progress
   const seuilManagerPrime = val('seuil_manager_prime') / 100;
@@ -1244,6 +1257,23 @@ function calculate() {
     + '<div class="bilan-line total couts-total"><span class="bl-label">TOTAL CO&Ucirc;TS</span><span class="bl-value">' + fmt(totalCouts) + '</span></div>'
 
     + '<div class="bilan-resultat"><span>R&Eacute;SULTAT NET (Revenus - Co&ucirc;ts)</span><span style="color:' + (resultatNet >= 0 ? 'var(--success)' : 'var(--danger)') + '">' + fmt(resultatNet) + '</span></div>';
+
+  // ═══ SALAIRES NETS MENSUELS ═══
+  const netMensuelResp = Math.round((total * (1 - tauxChargesSal)) / 12);
+  let salNetHtml = '<div class="tier-detail" style="font-weight:700;border-bottom:2px solid #6d28d9">'
+    + '<span class="tier-label" style="color:#6d28d9">&#128188; Responsable (manager)</span>'
+    + '<span class="tier-comm" style="color:#6d28d9">' + Math.round(netMensuelResp).toLocaleString('fr-FR') + ' € /mois</span>'
+    + '</div>';
+  team.forEach(m => {
+    const commN = calcCommNego(m.ca);
+    const brutAnnuelNego = salaireNego + commN;
+    const netMensuelNego = Math.round((brutAnnuelNego * (1 - tauxChargesSal)) / 12);
+    salNetHtml += '<div class="tier-detail">'
+      + '<span class="tier-label">' + m.nom + '</span>'
+      + '<span class="tier-comm">' + Math.round(netMensuelNego).toLocaleString('fr-FR') + ' € /mois</span>'
+      + '</div>';
+  });
+  document.getElementById('salaires-nets-body').innerHTML = salNetHtml;
 }
 
 // Init
